@@ -1,5 +1,5 @@
 function NothingToShow() {
-    return ( <p className="nothingToShow">There's nothing to show...</p> )
+    return ( <p className="nothingToShow">Nothing To Show...</p> )
 }
 
 export default NothingToShow
