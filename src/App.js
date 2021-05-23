@@ -10,12 +10,6 @@ function App() {
   const [friendList, setFriendList] = useState([]);
 
 
-  const [name, setName] = useState("");
-  const [contacts, setContacts] = useState("");
-  const [how_met, setHow_met] = useState("");
-
-
-
   useEffect(() => {
     const getFriendList = async () => {
       const friendListFromServer = await fetchFriendList();
@@ -38,55 +32,53 @@ function App() {
     const res = await fetch(`http://127.0.0.1:8000/name-rememberer/${id}/`);
     const data = await res.json();
     console.log("DATA: ", data);
-    return data;
+    return data; 
   };
 
   // update friend
+  const [friend1, setFriend1] = useState({
+    id: null,
+    name: '',
+    contacts: '',
+    how_met: ''
+  });
   const updateFriend = async (friend) => {
-    const friendToUpdate = await fetchFriend(friend.id);
-    setName(friend.name);
-    setContacts(friend.contacts);
-    setHow_met(friend.how_met);
-    const updFriend = {
-      ...friendToUpdate,
-      name: name,
-      contacts: contacts,
-      how_met: how_met,
-    };
+    // const friendToUpdate = await fetchFriend(friend.id);
     // const updFriend = {
     //   ...friendToUpdate,
     //   name: friend.name,
     //   contacts: friend.contacts,
     //   how_met: friend.how_met,
     // };
-    const res = await fetch(`http://127.0.0.1:8000/name-rememberer/${friend.id}/`, {
-      method: "PUT",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(updFriend),
-    });
 
-    const data = await res.json();
+    // const res = await fetch(`http://127.0.0.1:8000/name-rememberer/${friend.id}/`, {
+    //   method: "PUT",
+    //   headers: {
+    //     "Content-type": "application/json",
+    //   },
+    //   body: JSON.stringify(updFriend),
+    // });
 
-    setFriendList(
-      friendList.map((through_friend) =>
-        through_friend.id === friend.id
-          ? {
-              ...through_friend,
-              name: data.name,
-              contacts: data.contacts,
-              how_met: data.how_met,
-            }
-          : through_friend
-      )
-    );
+    // const data = await res.json();
 
-    setName("");
-    setContacts("");
-    setHow_met("");
+    // setFriendList(
+    //   friendList.map((through_friend) =>
+    //     through_friend.id === friend.id
+    //       ? {
+    //           ...through_friend,
+    //           name: data.name,
+    //           contacts: data.contacts,
+    //           how_met: data.how_met,
+    //         }
+    //       : through_friend
+    //   )
+    // );
 
-    console.log("PUUUUUt", data);
+    
+    setFriend1(...friend1, friend1.id=friend.id, friend1.name=friend.name, friend1.contacts=friend.contacts, friend1.how_met=friend.how_met);    
+
+    console.log('ID: ', friend);
+    console.log('FRIEND1: ', friend1);
   };
 
   // add friend
@@ -122,7 +114,7 @@ function App() {
         onAdd={() => setShowAddFriendForm(!showAddFriendForm)}
       />
 
-      {showAddFriendForm && <Form onAdd={addFriend} name={name} contacts={contacts} how_met={how_met} />}
+      {showAddFriendForm && <Form onAdd={addFriend} onUpdate={updateFriend} friend={friend1} />}
       {friendList.length > 0 ? (
         <ListFriends
           friendList={friendList}

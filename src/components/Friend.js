@@ -6,10 +6,7 @@ function Friend({ friend, onDelete, onUpdate }) {
       <p>{friend.how_met}</p>
       <div className="friend-btn flex">
         <button
-          className="btn-dark"
-          onClick={() =>
-            onUpdate(friend)
-          }
+          className="btn-dark" onClick={() => onUpdate(friend)}
         >
           Edit
         </button>
