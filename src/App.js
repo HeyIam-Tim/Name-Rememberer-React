@@ -8,6 +8,7 @@ import NothingToShow from "./components/NothingToShow";
 function App() {
   const [showAddFriendForm, setShowAddFriendForm] = useState(false);
   const [friendList, setFriendList] = useState([]);
+  const [updatedFriend, setUpdatedFriend] = useState('');
 
 
   useEffect(() => {
@@ -36,49 +37,36 @@ function App() {
   };
 
   // update friend
-  const [friend1, setFriend1] = useState({
-    id: null,
-    name: '',
-    contacts: '',
-    how_met: ''
-  });
   const updateFriend = async (friend) => {
-    // const friendToUpdate = await fetchFriend(friend.id);
-    // const updFriend = {
-    //   ...friendToUpdate,
-    //   name: friend.name,
-    //   contacts: friend.contacts,
-    //   how_met: friend.how_met,
-    // };
+    const friendToUpdate = await fetchFriend(friend.id);
+    setUpdatedFriend(friendToUpdate)
+
+    // const updFriend = { ...friendToUpdate, name: 'Steve' }
 
     // const res = await fetch(`http://127.0.0.1:8000/name-rememberer/${friend.id}/`, {
     //   method: "PUT",
     //   headers: {
     //     "Content-type": "application/json",
     //   },
-    //   body: JSON.stringify(updFriend),
+    //   body: JSON.stringify(updFriend)
     // });
 
-    // const data = await res.json();
+    // const data = await res.json()
 
     // setFriendList(
-    //   friendList.map((through_friend) =>
-    //     through_friend.id === friend.id
+    //   friendList.map((friend_through_list) =>
+    //     friend_through_list.id === friend.id
     //       ? {
-    //           ...through_friend,
+    //           ...friend_through_list,
     //           name: data.name,
     //           contacts: data.contacts,
     //           how_met: data.how_met,
     //         }
-    //       : through_friend
+    //       : friend_through_list
     //   )
     // );
 
-    
-    setFriend1(...friend1, friend1.id=friend.id, friend1.name=friend.name, friend1.contacts=friend.contacts, friend1.how_met=friend.how_met);    
-
-    console.log('ID: ', friend);
-    console.log('FRIEND1: ', friend1);
+    // console.log('ID: ', data);
   };
 
   // add friend
@@ -114,7 +102,7 @@ function App() {
         onAdd={() => setShowAddFriendForm(!showAddFriendForm)}
       />
 
-      {showAddFriendForm && <Form onAdd={addFriend} onUpdate={updateFriend} friend={friend1} />}
+      {showAddFriendForm && <Form onAdd={addFriend} onUpdate={updateFriend} friendToUpdate={updatedFriend} />}
       {friendList.length > 0 ? (
         <ListFriends
           friendList={friendList}
